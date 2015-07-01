@@ -18,7 +18,7 @@ def index():
         content = content[:content.find('</table>')]
         match=re.compile('<td class="link menu"><a href="(.+?)"><div id="(.+?)" class="l-s s-desk"></div>(.+?)</a></td>', re.DOTALL).findall(content)
         for url,uid, title in match:
-          addDir(title,"http://www.loyalbooks.com/"+url+"?results=100",'listEbooks',"")
+          addDir(title,"http://www.loyalbooks.com/"+url+"?results=100&sort=alphabet",'listEbooks',"")
         xbmcplugin.endOfDirectory(pluginhandle)
         if forceViewMode=="true":
           xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
@@ -31,7 +31,7 @@ def enMain():
         content = content[:content.find('</table>')]
         match=re.compile('<td class="link menu"><a href="(.+?)"><div id="(.+?)" class="g-s s-desk"></div>(.+?)</a></td>', re.DOTALL).findall(content)
         for url, uid, title in match:
-          addDir(title,"http://www.loyalbooks.com/"+url+"?results=100",'listEbooks',"")
+          addDir(title,"http://www.loyalbooks.com/"+url+"?results=100&sort=alphabet",'listEbooks',"")
         xbmcplugin.endOfDirectory(pluginhandle)
         if forceViewMode=="true":
           xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
