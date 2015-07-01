@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.audio.loyalbooks_com" name="LoyalBooks.com" version="2.0.1" provider-name="navjinder">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>audio</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Free Public Domain Audiobooks from LoyalBooks.com</summary>
+        <language></language>
+        <description lang="en">Free Public Domain Audiobooks from LoyalBooks. An unofficial addon by navjinder.com. Hope you like it. Follow me @navjinder</description>
+    <platform>all</platform>
+    </extension>
+</addon>
