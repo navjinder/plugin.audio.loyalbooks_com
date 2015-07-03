@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmcaddon,base64,socket
+import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmcaddon,base64,socket,quicknet
 
 socket.setdefaulttimeout(30)
 pluginhandle = int(sys.argv[1])
@@ -12,6 +12,8 @@ viewMode=str(addon.getSetting("viewMode"))
 def index():
         xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
         addDir(translation(30001),"",'enMain',"")
+        addDir(translation(30002),"http://www.loyalbooks.com/Top_100",'listEbooks',"")
+        addDir(translation(30004),"http://www.loyalbooks.com/author?sort=alphabet",'listEbooks',"")
         content = getUrl("http://www.loyalbooks.com/language-menu")
         content = content[content.find('<table class="link" summary="All Languages">'):]
         content = content[content.find('<tr>'):]
@@ -24,7 +26,6 @@ def index():
           xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
 def enMain():
-        addDir(translation(30002),"http://www.loyalbooks.com/Top_100",'listEbooks',"")
         content = getUrl("http://www.loyalbooks.com/genre-menu")
         content = content[content.find('<table class="link" summary="All Genres">'):]
         content = content[content.find('<tr>'):]
@@ -78,7 +79,8 @@ def listChapters(url):
             match=re.compile('<itunes:duration>(.+?)</itunes:duration>', re.DOTALL).findall(entry)
             duration=match[0]
             duration=cleanTime(duration)
-            addLink(title,url,'playAudio',"", duration, author)
+            tracknumber=i
+            addLink(title,url,'playAudio',"", duration, author, tracknumber)
         xbmcplugin.endOfDirectory(pluginhandle)
         if forceViewMode=="true":
           xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
@@ -118,11 +120,11 @@ def parameters_string_to_dict(parameters):
                     paramDict[paramSplits[0]] = paramSplits[1]
         return paramDict
 
-def addLink(name,url,mode,iconimage,dur,auth):
+def addLink(name,url,mode,iconimage,dur,auth, trnum):
         u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
         ok=True
         liz=xbmcgui.ListItem(name, iconImage="DefaultAudio.png", thumbnailImage=iconimage)
-        liz.setInfo( type="music", infoLabels={ "Title": name , "duration": dur ,"artist":auth } )
+        liz.setInfo( type="music", infoLabels={ "Title": name , "duration": dur ,"artist":auth, "tracknumber" : trnum } )
         liz.setProperty('IsPlayable', 'true')
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz)
         return ok

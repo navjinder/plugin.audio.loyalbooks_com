@@ -1,2 +1,6 @@
+1.0.1
+- Added Quicknet for speed and cache improvements
+- Added List by Authors (alphabetically)
+
 1.0.0
 Initial Release
